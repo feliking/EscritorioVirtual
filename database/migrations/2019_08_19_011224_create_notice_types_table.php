@@ -15,6 +15,7 @@ class CreateNoticeTypesTable extends Migration
     {
         Schema::create('notice_types', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('name');
             $table->timestamps();
         });
     }
