@@ -7,6 +7,9 @@ use App\Notice;
 
 class NoticeController extends Controller
 {
+    public function create(){
+        return view('notices.index');
+    }
     /**
      * Display a listing of the resource.
      *

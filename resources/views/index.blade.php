@@ -1,6 +1,11 @@
 @extends('layouts.main')
 
 @section('content')
+<div class="row">
+    <div class="col-md-12 text-center pb-3">
+        <h2>Escritorio Virtual</h2>
+    </div>
+</div>
 <div class="modal fade" id="scrollmodal" tabindex="-1" role="dialog" aria-labelledby="scrollmodalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
