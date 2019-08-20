@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Notice;
 
 class NoticeController extends Controller
 {
@@ -13,7 +14,7 @@ class NoticeController extends Controller
      */
     public function index()
     {
-        //
+        return Notice::with('notice_type')->get();
     }
 
     /**
@@ -24,7 +25,7 @@ class NoticeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return Notice::create($request->all());
     }
 
     /**
@@ -35,7 +36,7 @@ class NoticeController extends Controller
      */
     public function show($id)
     {
-        //
+        return Notice::findOrFail($id);
     }
 
     /**
@@ -47,7 +48,10 @@ class NoticeController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $notice = Notice::findOrFail($id);
+        $notice->fill($request->all());
+        $notice->save();
+        return $notice;
     }
 
     /**
@@ -58,6 +62,8 @@ class NoticeController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $notice = Notice::findOrFail($id);
+        $notice->delete();
+        return $notice;
     }
 }

@@ -3,10 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\NoticeType;
-use Auth;
+use App\Option;
 
-class NoticeTypeController extends Controller
+class OptionController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,7 +14,7 @@ class NoticeTypeController extends Controller
      */
     public function index()
     {
-        return NoticeType::with('notices')->get();
+        return Option::with('items')->get();
     }
 
     /**
@@ -26,7 +25,7 @@ class NoticeTypeController extends Controller
      */
     public function store(Request $request)
     {
-        return NoticeType::create($request->all());
+        return Option::create($request->all());
     }
 
     /**
@@ -37,7 +36,7 @@ class NoticeTypeController extends Controller
      */
     public function show($id)
     {
-        return NoticeType::findOrFail($id);
+        return Option::with('items')->findOrFail($id);
     }
 
     /**
@@ -49,10 +48,10 @@ class NoticeTypeController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $notice_type = NoticeType::findOrFail($id);
-        $notice_type->fill($request->all());
-        $notice_type->save();
-        return $notice_type;
+        $option = Option::findOrFail($id);
+        $option->fill($request->all());
+        $option->save();
+        return $option;
     }
 
     /**
@@ -63,14 +62,14 @@ class NoticeTypeController extends Controller
      */
     public function destroy($id)
     {
-        $notice_type = NoticeType::findOrFail($id);
-        $notice_type->delete();
-        return $notice_type;
+        $option = Option::findOrFail($id);
+        $option->delete();
+        return $option;
     }
 
     public function fill($request)
     {
         $request = json_decode($request, true);
-        return NoticeType::where($request)->get();
+        return Option::where($request)->get();
     }
 }

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateNoticesTable extends Migration
+class CreateItemsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,14 @@ class CreateNoticesTable extends Migration
      */
     public function up()
     {
-        Schema::create('notices', function (Blueprint $table) {
+        Schema::create('items', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->integer('user_id')->unsigned();
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->integer('notice_type_id')->unsigned();
-            $table->foreign('notice_type_id')->references('id')->on('notice_types');
-            $table->string('title');
-            $table->string('description', 500)->nullable();
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->integer('option_id')->unsigned();
+            $table->foreign('option_id')->references('id')->on('options')->onDelete('cascade');
+            $table->string('name');
+            $table->string('description')->nullable();
             $table->string('document')->nullable();
             $table->timestamps();
         });
@@ -33,6 +33,6 @@ class CreateNoticesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('notices');
+        Schema::dropIfExists('items');
     }
 }

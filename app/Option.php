@@ -4,11 +4,11 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class NoticeType extends Model
+class Option extends Model
 {
     protected $fillable = ['name', 'user_id'];
 
-    public function notices(){
-        return $this->hasMany(Notice::class);
+    public function items(){
+        return $this->hasMany(Item::class);
     }
 }
