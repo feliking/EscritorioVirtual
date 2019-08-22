@@ -5,28 +5,28 @@
 @endsection
 
 @section('content')
-<div class="modal fade" id="addNotice" tabindex="-1" role="dialog" aria-labelledby="scrollmodalLabel" aria-hidden="true">
+<div class="modal fade" id="addItem" tabindex="-1" role="dialog" aria-labelledby="scrollmodalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="scrollmodalLabel">Nueva Noticia</h5>
+                <h5 class="modal-title" id="scrollmodalLabel">Nuevo Item</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form @submit.prevent="addNotice" enctype="multipart/form-data">
+            <form @submit.prevent="addItem" enctype="multipart/form-data">
             <div class="modal-body">
                 <div class="form-group">
-                    <select name="select" id="select" class="form-control" v-model="notice.notice_type_id" required>
-                        <option v-for="notice_type in notice_types" :value="notice_type.id" selected>@{{ notice_type.name }}</option>
+                    <select name="select" id="select" class="form-control" v-model="item.option_id" required>
+                        <option v-for="option in options" :value="option.id" selected>@{{ option.name }}</option>
                     </select>
-                    <small>Seleccione el tipo de noticia</small>
+                    <small>Seleccione el tipo de opción</small>
                 </div>
                 <div class="form-group">
-                    <input type="text" placeholder="Título" class="form-control" v-model="notice.title" required>
+                    <input type="text" placeholder="Nombre del Item" class="form-control" v-model="item.name" required>
                 </div>
                 <div class="form-group">
-                    <textarea rows="7" placeholder="Descripción" class="form-control" v-model="notice.description" required></textarea>
+                    <textarea rows="7" placeholder="Descripción" class="form-control" v-model="item.description" required></textarea>
                 </div>
                 <div class="form-group">
                     <input type="file" placeholder="Documento" class="form-control" ref="document" required>
@@ -41,28 +41,28 @@
     </div>
 </div>
 
-<div class="modal fade" id="editNotice" tabindex="-1" role="dialog" aria-labelledby="scrollmodalLabel" aria-hidden="true">
+<div class="modal fade" id="editItem" tabindex="-1" role="dialog" aria-labelledby="scrollmodalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="scrollmodalLabel">Editar Noticia</h5>
+                <h5 class="modal-title" id="scrollmodalLabel">Editar Item</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form @submit.prevent="updateNotice(notice.id)" enctype="multipart/form-data">
+            <form @submit.prevent="updateItem(item.id)" enctype="multipart/form-data">
             <div class="modal-body">
                 <div class="form-group">
-                    <select name="select" id="select" class="form-control" v-model="notice.notice_type_id" required>
-                        <option v-for="notice_type in notice_types" :value="notice_type.id" selected>@{{ notice_type.name }}</option>
+                    <select name="select" id="select" class="form-control" v-model="item.option_id" required>
+                        <option v-for="option in options" :value="option.id" selected>@{{ option.name }}</option>
                     </select>
-                    <small>Seleccione el tipo de noticia</small>
+                    <small>Seleccione el tipo de opción</small>
                 </div>
                 <div class="form-group">
-                    <input type="text" placeholder="Título" class="form-control" v-model="notice.title" required>
+                    <input type="text" placeholder="Nombre del Item" class="form-control" v-model="item.name" required>
                 </div>
                 <div class="form-group">
-                    <textarea rows="7" placeholder="Descripción" class="form-control" v-model="notice.description" required></textarea>
+                    <textarea rows="7" placeholder="Descripción" class="form-control" v-model="item.description" required></textarea>
                 </div>
                 <div class="alert alert-danger" role="alert">
                     - Sí sube un archivo se sustituíra el anterior <br>
@@ -85,30 +85,30 @@
     <div class="col-md-12">
         <div class="card">
             <div class="card-header">
-                <strong class="card-title">Últimas noticias </strong>
-                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#addNotice" @click.prevent="resetNotice"><i class="fa fa-plus"></i></button>
+                <strong class="card-title">Items </strong>
+                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#addItem" @click.prevent="resetItem"><i class="fa fa-plus"></i></button>
             </div>
             <div class="card-body text-left">
                 <table id="bootstrap-data-table-export" class="table table-striped table-bordered dt-responsive small">
                     <thead>
                         <tr>
                             <th>Opciones</th>
-                            <th class="text-white bg-dark">Tipo de noticia</th>
-                            <th class="text-white bg-dark">Título</th>
+                            <th class="text-white bg-dark">Tipo de Opción</th>
+                            <th class="text-white bg-dark">Nombre</th>
                             <th class="text-white bg-dark">Descripción</th>
                             <th class="text-white bg-dark">Adjunto</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="(notice, index) in notices">
+                        <tr v-for="(item, index) in items">
                             <td class="text-center">
-                                <a href="#" class="btn-sm btn-primary" data-toggle="modal" data-target="#editNotice" @click.prevent="getNotice(notice.id)"><i class="fa fa-pencil fa-lg"></i></a>
-                                <a href="#" class="btn-sm btn-danger" data-toggle="modal" data-target="#" @click.prevent="deleteNotice(notice.id)"><i class="fa fa-trash-o fa-lg"></i></a>
+                                <a href="#" class="btn-sm btn-primary" data-toggle="modal" data-target="#editItem" @click.prevent="getItem(item.id)"><i class="fa fa-pencil fa-lg"></i></a>
+                                <a href="#" class="btn-sm btn-danger" data-toggle="modal" data-target="#" @click.prevent="deleteItem(item.id)"><i class="fa fa-trash-o fa-lg"></i></a>
                             </td>
-                            <td>@{{ notice.notice_type.name }}</td>
-                            <td>@{{ notice.title }}</td>
-                            <td>@{{ notice.description }}</td>
-                            <td class="text-center"> <a :href="'../'+notice.document" target="_blank" class="fa fa-file fa-lg"></a> </td>
+                            <td>@{{ item.option.name }}</td>
+                            <td>@{{ item.name }}</td>
+                            <td>@{{ item.description }}</td>
+                            <td class="text-center"> <a :href="'../'+item.document" target="_blank" class="fa fa-file fa-lg"></a> </td>
                         </tr>
                     </tbody>
                 </table>
@@ -133,14 +133,14 @@
         el: '#app',
         data(){
             return{
-                notices: [],
-                notice_types: [],
-                notice: {}
+                items: [],
+                options: [],
+                item: {}
             }
         },
         mounted() {
-            this.getNotices()
-            this.getNoticeTypes()
+            this.getItems()
+            this.getOptions()
             setTimeout(function(){$('#bootstrap-data-table-export').DataTable(
                     {
                     //searching: false,
@@ -169,64 +169,65 @@
                 );}, 0);
         },
         methods:{
-            async getNotices(){
-                let res = await axios.get("{{ route('notice.index') }}")
-                this.notices = res.data
+            async getItems(){
+                let res = await axios.get("{{ route('item.index') }}")
+                this.items = res.data
+                console.log(this.items)
             },
-            async getNoticeTypes(){
-                let res = await axios.get("{{ route('notice_type.index') }}")
-                this.notice_types = res.data
+            async getOptions(){
+                let res = await axios.get("{{ route('option.index') }}")
+                this.options = res.data
             },
-            async addNotice(){
+            async addItem(){
                 let data = new FormData()
-                data.append('notice_type_id', this.notice.notice_type_id)
-                data.append('title', this.notice.title)
-                data.append('description', this.notice.description)
+                data.append('option_id', this.item.option_id)
+                data.append('name', this.item.name)
+                data.append('description', this.item.description)
                 data.append('file', this.$refs.document.files[0])
                 data.append('user_id', {{ Auth::user()->id }})
                 try{
-                    let res = await axios.post("{{ url('api/notice') }}", data)
-                    this.notice = {}
+                    let res = await axios.post("{{ url('api/item') }}", data)
+                    this.item = {}
                     this.$refs.document.value = null
-                    this.getNotices()
+                    this.getItems()
                     toastr.success('Operacion exitosa', 'Registrado correctamente')
                 }
                 catch{
                     toastr.error('¡Error!', 'Ocurrió un problema')
                 }
             },
-            async getNotice(id){
-                let res = await axios.get("{{ url('api/notice') }}/"+id)
-                this.notice = res.data
+            async getItem(id){
+                let res = await axios.get("{{ url('api/item') }}/"+id)
+                this.item = res.data
             },
-            async resetNotice(){
-                this.notice = {}
+            async resetItem(){
+                this.item = {}
             },
-            async updateNotice(id){
+            async updateItem(id){
                 let data = new FormData()
                 data.append('_method', 'PATCH');
-                data.append('notice_type_id', this.notice.notice_type_id)
-                data.append('title', this.notice.title)
-                data.append('description', this.notice.description)
+                data.append('option_id', this.item.option_id)
+                data.append('name', this.item.name)
+                data.append('description', this.item.description)
                 if(this.$refs.document_update.files[0]){
                     data.append('file', this.$refs.document_update.files[0])
                 }
                 data.append('user_id', {{ Auth::user()->id }})
                 try{
-                    let res = await axios.post("{{ url('api/notice') }}/"+id, data)
-                    this.notice = res.data
+                    let res = await axios.post("{{ url('api/item') }}/"+id, data)
+                    this.item = res.data
                     this.$refs.document_update.value = null
-                    this.getNotices()
+                    this.getItems()
                     toastr.success('Operación exitosa', 'Registro actualizado')
                 }
                 catch{
                     toastr.error('Ocurrio un error', 'Vuelva a intentarlo')
                 }
             },
-            async deleteNotice(id){
+            async deleteItem(id){
                 try{
-                    let res = await axios.delete("{{ url('api/notice') }}/"+id)
-                    this.getNotices()
+                    let res = await axios.delete("{{ url('api/item') }}/"+id)
+                    this.getItems()
                     toastr.success('Operación exitosa', 'Registro eliminado')
                 }
                 catch{

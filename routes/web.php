@@ -17,4 +17,8 @@ Route::get('/', function () {
 
 Auth::routes();
 
+Route::get('/notice/main', 'NoticeController@main')->name('notice.main')->middleware('auth');
+Route::get('/option/main', 'OptionController@main')->name('option.main')->middleware('auth');
+Route::get('/item/main', 'ItemController@main')->name('item.main')->middleware('auth');
+
 Route::get('/home', 'HomeController@index')->name('home');

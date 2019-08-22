@@ -4,9 +4,14 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Item;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
 
 class ItemController extends Controller
 {
+    public function main(){
+        return view('items.index');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -25,6 +30,10 @@ class ItemController extends Controller
      */
     public function store(Request $request)
     {
+        $file = $request->file('file'); 
+        $nombre_unico = 'files/'.uniqid().'.'.$file->getClientOriginalExtension();
+        Storage::disk('uploads')->put($nombre_unico,  File::get($file));
+        $request['document'] = 'uploads/'.$nombre_unico;
         return Item::create($request->all());
     }
 
@@ -49,6 +58,17 @@ class ItemController extends Controller
     public function update(Request $request, $id)
     {
         $item = Item::findOrFail($id);
+        if ($request->hasFile('file')) {
+            $file = $request->file('file');
+            unlink(public_path($item->document));
+            // Storage::delete($notice->document);
+            $nombre_unico = 'files/'.uniqid().'.'.$file->getClientOriginalExtension();
+            Storage::disk('uploads')->put($nombre_unico,  File::get($file));
+            $request['document'] = 'uploads/'.$nombre_unico;
+        }
+        else{
+            $request['document'] = $item->document;
+        }
         $item->fill($request->all());
         $item->save();
         return $item;
@@ -63,6 +83,7 @@ class ItemController extends Controller
     public function destroy($id)
     {
         $item = Item::findOrFail($id);
+        unlink(public_path($item->document));
         $item->delete();
         return $item;
     }

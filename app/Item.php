@@ -9,6 +9,6 @@ class Item extends Model
     protected $fillable = ['option_id', 'name', 'description', 'document', 'user_id'];
 
     public function option(){
-        return $this->belongsTo(Item::class);
+        return $this->belongsTo(Option::class);
     }
 }

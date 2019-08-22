@@ -77,8 +77,9 @@
                     <li class="menu-item-has-children dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-cogs"></i>Administración</a>
                         <ul class="sub-menu children dropdown-menu">                            
-                            <li><i class="fa fa-id-card-o"></i><a href="{{ route('notice.create') }}">Últimas Noticias</a></li>
-                            <li><i class="fa fa-id-card-o"></i><a href="">Recursos</a></li>
+                            <li><i class="fa fa-id-card-o"></i><a href="{{ route('notice.main') }}">Últimas Noticias</a></li>
+                            <li><i class="fa fa-id-card-o"></i><a href="{{ route('option.main') }}">Opciones</a></li>
+                            <li><i class="fa fa-id-card-o"></i><a href="{{ route('item.main') }}">Items</a></li>
                         </ul>
                     </li>
                     @endauth
@@ -183,15 +184,15 @@
                         </a>
 
                         <div class="user-menu dropdown-menu">
-                            <a class="nav-link" href="#"><i class="fa fa- user"></i>My Profile</a>
+                            <a class="nav-link" href="#"><i class="fa fa- user"></i>Mi perfil</a>
 
-                            <a class="nav-link" href="#"><i class="fa fa- user"></i>Notifications <span class="count">13</span></a>
+                            <a class="nav-link" href="#"><i class="fa fa- user"></i>Notificaciones <span class="count">13</span></a>
 
-                            <a class="nav-link" href="#"><i class="fa fa -cog"></i>Settings</a>
+                            <a class="nav-link" href="#"><i class="fa fa -cog"></i>Configuración</a>
 
                             <a class="nav-link" href="#" href="{{ route('logout') }}"
                             onclick="event.preventDefault();
-                                          document.getElementById('logout-form').submit();"><i class="fa fa-power -off"></i>Logout</a>
+                                          document.getElementById('logout-form').submit();"><i class="fa fa-power -off"></i>Cerrar sesión</a>
                         </div>
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                             @csrf
@@ -236,13 +237,6 @@
     <!-- Scripts -->
     <script src="{{ asset('js/vue.js') }}"></script>
     <script src="{{ asset('js/axios.js') }}"></script>
-    
-    <script src="{{ asset('js/lib/jquery.min.js') }}"></script>
-    <script src="{{ asset('js/lib/popper.min.js') }}"></script>
-    <script src="{{ asset('js/lib/bootstrap.min.js') }}"></script>
-    <script src="{{ asset('js/lib/jquery.matchHeight.min.js') }}"></script>
-    <script src="{{ asset('js/lib/toastr.min.js') }}"></script>
-    <script src="{{ asset('js/lib/print.min.js') }}"></script>
     <script>
         window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
         
@@ -254,6 +248,14 @@
             console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
         }
     </script>
+    
+    <script src="{{ asset('js/lib/jquery.min.js') }}"></script>
+    <script src="{{ asset('js/lib/popper.min.js') }}"></script>
+    <script src="{{ asset('js/lib/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('js/lib/jquery.matchHeight.min.js') }}"></script>
+    <script src="{{ asset('js/lib/toastr.min.js') }}"></script>
+    <script src="{{ asset('js/lib/print.min.js') }}"></script>
+    
     <script src="{{ asset('js/main.js') }}"></script>
     <script src="{{ asset('js/lib/chosen/chosen.jquery.min.js') }}"></script>
     @yield('scripts')

@@ -7,6 +7,10 @@ use App\Option;
 
 class OptionController extends Controller
 {
+
+    public function main(){
+        return view('options.index');
+    }
     /**
      * Display a listing of the resource.
      *

@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Notice;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
 
 class NoticeController extends Controller
 {
-    public function create(){
+    public function main(){
         return view('notices.index');
     }
     /**
@@ -28,6 +30,10 @@ class NoticeController extends Controller
      */
     public function store(Request $request)
     {
+        $file = $request->file('file'); 
+        $nombre_unico = 'files/'.uniqid().'.'.$file->getClientOriginalExtension();
+        Storage::disk('uploads')->put($nombre_unico,  File::get($file));
+        $request['document'] = 'uploads/'.$nombre_unico;
         return Notice::create($request->all());
     }
 
@@ -52,6 +58,17 @@ class NoticeController extends Controller
     public function update(Request $request, $id)
     {
         $notice = Notice::findOrFail($id);
+        if ($request->hasFile('file')) {
+            $file = $request->file('file');
+            unlink(public_path($notice->document));
+            // Storage::delete($notice->document);
+            $nombre_unico = 'files/'.uniqid().'.'.$file->getClientOriginalExtension();
+            Storage::disk('uploads')->put($nombre_unico,  File::get($file));
+            $request['document'] = 'uploads/'.$nombre_unico;
+        }
+        else{
+            $request['document'] = $notice->document;
+        }
         $notice->fill($request->all());
         $notice->save();
         return $notice;
@@ -66,6 +83,8 @@ class NoticeController extends Controller
     public function destroy($id)
     {
         $notice = Notice::findOrFail($id);
+        unlink(public_path($notice->document));
+        // Storage::delete('/'.$notice->document);
         $notice->delete();
         return $notice;
     }
