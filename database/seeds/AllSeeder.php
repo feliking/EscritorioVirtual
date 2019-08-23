@@ -17,6 +17,7 @@ class AllSeeder extends Seeder
     public function run()
     {
         User::create([
+            'ci' => '123456',
             'name' => 'Administrador',
             'username' => 'admin',
             'password' => bcrypt('admin')

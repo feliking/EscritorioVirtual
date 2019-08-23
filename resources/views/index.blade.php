@@ -84,7 +84,7 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
-                <a :href="notice.document" target="_blank" class="btn btn-success float-right"><i class="fa fa-expand"></i></a>
+                <a :href="item.document" target="_blank" class="btn btn-success float-right"><i class="fa fa-expand"></i></a>
                 <h5 class="modal-title" id="scrollmodalLabel">Documento adjunto</h5>
             </div>
             <div class="modal-body">
@@ -96,25 +96,33 @@
     </div>
 </div>
 <div class="row">
-        <div class="col-md-4" v-for="(notice_type, index) in notice_types">
-            <aside class="profile-nav alt">
-                <section class="card">
-                    <div class="card-header user-header alt bg-dark">
-                        <div class="media">
-                            <div class="media-body">
-                                <h4 class="text-light display-6">Últimas Noticias: @{{ notice_type.name }}</h2>
-                                {{-- <p>Project Manager</p> --}}
-                            </div>
+    <div class="col-md-4" v-for="(notice_type, index) in notice_types">
+        <aside class="profile-nav alt">
+            <section class="card">
+                <div class="card-header user-header alt bg-dark">
+                    <div class="media">
+                        <div class="media-body">
+                            <h4 class="text-light display-6">Últimas Noticias: @{{ notice_type.name }}</h2>
+                            {{-- <p>Project Manager</p> --}}
                         </div>
                     </div>
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item" v-for="(notice, index) in notice_type.notices">
-                            <a href="#" data-toggle="modal" data-target="#scrollmodal" @click.prevent="getNotice(notice.id)"> <i class="fa fa-tasks"></i> @{{ notice.title }} </a><a href="#" data-toggle="modal" data-target="#content-document" @click.prevent="getNotice(notice.id)"><span class="badge badge-primary pull-right"><i class="fa fa-paperclip"></i></span></a>
-                        </li>
-                    </ul>
-                </section>
-            </aside>
-        </div>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item" v-for="(notice, index) in notice_type.notices">
+                        <a href="#" data-toggle="modal" data-target="#scrollmodal" @click.prevent="getNotice(notice.id)"> <i class="fa fa-tasks"></i> @{{ notice.title }} </a><a href="#" data-toggle="modal" data-target="#content-document" @click.prevent="getNotice(notice.id)"><span class="badge badge-primary pull-right"><i class="fa fa-paperclip"></i></span></a>
+                    </li>
+                </ul>
+                <div class="card-footer user-header alt bg-success" v-if="notice_types.length > 4">
+                    <div class="media">
+                        <div class="media-body">
+                            <h4 class="text-light display-6">Últimas Noticias: @{{ notice_type.name }}</h2>
+                            {{-- <p>Project Manager</p> --}}
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </aside>
+    </div>
 </div>
 <div class="row">
     <div class="col-md-12 text-center pb-3">
@@ -151,13 +159,15 @@
                 notice: {},
                 count: 0,
                 option: {},
-                item: {}
+                item: {},
+                expand: false
             }
         },
         mounted() {
             this.getOptions()
             this.getNoticeTypes()
             this.getNotices()
+            
         },
         methods:{
             async getOptions(){

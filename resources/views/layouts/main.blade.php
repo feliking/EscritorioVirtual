@@ -82,6 +82,14 @@
                             <li><i class="fa fa-id-card-o"></i><a href="{{ route('item.main') }}">Items</a></li>
                         </ul>
                     </li>
+                    @if(Auth::user()->id == 1)
+                    <li class="menu-item-has-children dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-users"></i>Acceso</a>
+                        <ul class="sub-menu children dropdown-menu">                            
+                            <li><i class="fa fa-id-card-o"></i><a href="{{ route('user.main') }}">Usuarios</a></li>
+                        </ul>
+                    </li>
+                    @endif
                     @endauth
                     <li class="active">
                         <a href="{{ url('/home') }}"><i class="menu-icon fa fa-sign-in"></i>Iniciar sesión </a>
@@ -97,16 +105,17 @@
         <header id="header" class="header">
             <div class="top-left">
                 <div class="navbar-header">
-                    <a class="navbar-brand" href="./"><img src="{{ asset('images/logo.png') }}" alt="Logo"></a>
+                    <a class="navbar-brand" href="{{ url('/') }}"><img src="{{ asset('images/logo.png') }}" alt="Logo"></a>
                     <a id="menuToggle" class="menutoggle"><i class="fa fa-bars"></i></a>
-                    <a class="navbar-brand hidden" href="./"><img src="{{ asset('images/logo2.png') }}" alt="Logo"></a>
+                    <a class="navbar-brand hidden" href="{{ url('/') }}"><img src="{{ asset('images/logo2.png') }}" alt="Logo"></a>
                 </div>
             </div>
             <div class="top-right">
                 <div class="header-menu">
                     <div class="header-left">
                         <button class="search-trigger"><i class="fa fa-search"></i></button>
-                        <div class="form-inline">
+                        <div class="form-inline text-center pt-3">
+                            <img src="https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_92x30dp.png" height="90%">
                             <form class="search-form" method="GET" action="http://www.google.es/search" target="_blank">
                                 <input class="form-control mr-sm-2" type="text" name="q" placeholder="Buscar en Google" aria-label="Search">
                                 <input style="display: none" type="submit">
