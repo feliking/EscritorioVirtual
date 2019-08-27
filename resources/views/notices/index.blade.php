@@ -29,7 +29,12 @@
                     <textarea rows="7" placeholder="Descripción" class="form-control" v-model="notice.description" required></textarea>
                 </div>
                 <div class="form-group">
-                    <input type="file" placeholder="Documento" class="form-control" ref="document" required>
+                    <label for="">Documento adjunto(opcional)</label>
+                    <input type="file" placeholder="Documento" class="form-control" ref="document_a">
+                </div>
+                <div class="form-group">
+                    <label for="">Imágen de la publicación(opcional)</label>
+                    <input type="file" placeholder="Documento" class="form-control" ref="img_a">
                 </div>
             </div>
             <div class="modal-footer">
@@ -69,7 +74,12 @@
                     - Sí no sube ningún archivo se mantendra el anterior
                 </div>
                 <div class="form-group">
+                    <label for="">Documento adjunto(opcional)</label>
                     <input type="file" placeholder="Documento" class="form-control" ref="document_update">
+                </div>
+                <div class="form-group">
+                    <label for="">Imágen de la publicación(opcional)</label>
+                    <input type="file" placeholder="Documento" class="form-control" ref="img_update">
                 </div>
             </div>
             <div class="modal-footer">
@@ -182,12 +192,14 @@
                 data.append('notice_type_id', this.notice.notice_type_id)
                 data.append('title', this.notice.title)
                 data.append('description', this.notice.description)
-                data.append('file', this.$refs.document.files[0])
+                data.append('document_a', this.$refs.document_a.files[0])
+                data.append('img_a', this.$refs.img_a.files[0])
                 data.append('user_id', {{ Auth::user()->id }})
                 try{
                     let res = await axios.post("{{ url('api/notice') }}", data)
                     this.notice = {}
-                    this.$refs.document.value = null
+                    this.$refs.document_a.value = null
+                    this.$refs.img_a.value = null
                     this.getNotices()
                     toastr.success('Operacion exitosa', 'Registrado correctamente')
                 }
@@ -208,14 +220,14 @@
                 data.append('notice_type_id', this.notice.notice_type_id)
                 data.append('title', this.notice.title)
                 data.append('description', this.notice.description)
-                if(this.$refs.document_update.files[0]){
-                    data.append('file', this.$refs.document_update.files[0])
-                }
+                data.append('document_update', this.$refs.document_update.files[0])
+                data.append('img_update', this.$refs.img_update.files[0])
                 data.append('user_id', {{ Auth::user()->id }})
                 try{
                     let res = await axios.post("{{ url('api/notice') }}/"+id, data)
                     this.notice = res.data
                     this.$refs.document_update.value = null
+                    this.$refs.img_update.value = null
                     this.getNotices()
                     toastr.success('Operación exitosa', 'Registro actualizado')
                 }

@@ -23,40 +23,40 @@ class AllSeeder extends Seeder
             'password' => bcrypt('admin')
         ]);
 
-        NoticeType::create([
-            'user_id' => 1,
-            'name' => 'notice1'
-        ]);
+        // NoticeType::create([
+        //     'user_id' => 1,
+        //     'name' => 'notice1'
+        // ]);
 
-        NoticeType::create([
-            'user_id' => 1,
-            'name' => 'notice2'
-        ]);
+        // NoticeType::create([
+        //     'user_id' => 1,
+        //     'name' => 'notice2'
+        // ]);
 
-        NoticeType::create([
-            'user_id' => 1,
-            'name' => 'notice3'
-        ]);
+        // NoticeType::create([
+        //     'user_id' => 1,
+        //     'name' => 'notice3'
+        // ]);
 
-        Notice::create([
-            'user_id' => 1,
-            'notice_type_id' => 1,
-            'title' => 'Feriado por el día del Ministerio',
-            'description' => 'Se otorga feriado el día de mañana por el día conmemorativo del Ministerio',
-            'document' => 'Documento'
-        ]);
+        // Notice::create([
+        //     'user_id' => 1,
+        //     'notice_type_id' => 1,
+        //     'title' => 'Feriado por el día del Ministerio',
+        //     'description' => 'Se otorga feriado el día de mañana por el día conmemorativo del Ministerio',
+        //     'document' => 'Documento'
+        // ]);
 
-        Option::create([
-            'user_id' => 1,
-            'name' => 'Normativas'
-        ]);
+        // Option::create([
+        //     'user_id' => 1,
+        //     'name' => 'Normativas'
+        // ]);
 
-        Item::create([
-            'user_id' => 1,
-            'option_id' => 1,
-            'name' => 'Ley 1178',
-            'description' => 'Esta ley esta aplicada a las entidades publicas',
-            'document' => 'Documento'
-        ]);
+        // Item::create([
+        //     'user_id' => 1,
+        //     'option_id' => 1,
+        //     'name' => 'Ley 1178',
+        //     'description' => 'Esta ley esta aplicada a las entidades publicas',
+        //     'document' => 'Documento'
+        // ]);
     }
 }

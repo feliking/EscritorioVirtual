@@ -30,10 +30,26 @@ class NoticeController extends Controller
      */
     public function store(Request $request)
     {
-        $file = $request->file('file'); 
-        $nombre_unico = 'files/'.uniqid().'.'.$file->getClientOriginalExtension();
-        Storage::disk('uploads')->put($nombre_unico,  File::get($file));
-        $request['document'] = 'uploads/'.$nombre_unico;
+        //return $request->all();
+        if($request->hasFile('document_a')){
+            $file = $request->file('document_a'); 
+            $nombre_unico = 'files/'.uniqid().'.'.$file->getClientOriginalExtension();
+            Storage::disk('uploads')->put($nombre_unico,  File::get($file));
+            $request['document'] = 'uploads/'.$nombre_unico;
+        }
+        else{
+            $request['document'] = null;
+        }
+        if($request->hasFile('img_a')){
+            $file = $request->file('img_a'); 
+            $nombre_unico = 'files/'.uniqid().'.'.$file->getClientOriginalExtension();
+            Storage::disk('uploads')->put($nombre_unico,  File::get($file));
+            $request['img'] = 'uploads/'.$nombre_unico;
+            //return $request->get('img');
+        }
+        else{
+            $request['img'] = null;
+        }
         return Notice::create($request->all());
     }
 
@@ -58,16 +74,29 @@ class NoticeController extends Controller
     public function update(Request $request, $id)
     {
         $notice = Notice::findOrFail($id);
-        if ($request->hasFile('file')) {
-            $file = $request->file('file');
-            unlink(public_path($notice->document));
-            // Storage::delete($notice->document);
+        if($request->hasFile('document_update')){
+            if($notice->document != null){
+                unlink(public_path($notice->document));
+            }
+            $file = $request->file('document_update'); 
             $nombre_unico = 'files/'.uniqid().'.'.$file->getClientOriginalExtension();
             Storage::disk('uploads')->put($nombre_unico,  File::get($file));
             $request['document'] = 'uploads/'.$nombre_unico;
         }
         else{
             $request['document'] = $notice->document;
+        }
+        if($request->hasFile('img_update')){
+            if($notice->img != null){
+                unlink(public_path($notice->img));
+            }
+            $file = $request->file('img_update'); 
+            $nombre_unico = 'files/'.uniqid().'.'.$file->getClientOriginalExtension();
+            Storage::disk('uploads')->put($nombre_unico,  File::get($file));
+            $request['img'] = 'uploads/'.$nombre_unico;
+        }
+        else{
+            $request['img'] = $notice->img;
         }
         $notice->fill($request->all());
         $notice->save();
@@ -83,8 +112,12 @@ class NoticeController extends Controller
     public function destroy($id)
     {
         $notice = Notice::findOrFail($id);
-        unlink(public_path($notice->document));
-        // Storage::delete('/'.$notice->document);
+        if($notice->document != null){
+            unlink(public_path($notice->document));
+        }
+        if($notice->img != null){
+            unlink(public_path($notice->img));
+        }
         $notice->delete();
         return $notice;
     }

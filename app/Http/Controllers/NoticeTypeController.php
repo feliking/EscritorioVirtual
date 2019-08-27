@@ -8,6 +8,9 @@ use Auth;
 
 class NoticeTypeController extends Controller
 {
+    public function main(){
+        return view('notice_types.index');
+    }
     /**
      * Display a listing of the resource.
      *

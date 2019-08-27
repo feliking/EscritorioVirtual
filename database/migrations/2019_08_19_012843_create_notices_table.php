@@ -22,6 +22,7 @@ class CreateNoticesTable extends Migration
             $table->string('title');
             $table->string('description', 500)->nullable();
             $table->string('document')->nullable();
+            $table->string('img')->nullable();
             $table->timestamps();
         });
     }

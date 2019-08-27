@@ -76,10 +76,12 @@
                     <li class="menu-title">Publicaciones</li><!-- /.menu-title -->
                     <li class="menu-item-has-children dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-cogs"></i>Administración</a>
-                        <ul class="sub-menu children dropdown-menu">                            
+                        <ul class="sub-menu children dropdown-menu">
+                            <li><i class="fa fa-id-card-o"></i><a href="{{ route('notice_type.main') }}">Tipos de noticia</a></li>                       
                             <li><i class="fa fa-id-card-o"></i><a href="{{ route('notice.main') }}">Últimas Noticias</a></li>
                             <li><i class="fa fa-id-card-o"></i><a href="{{ route('option.main') }}">Opciones</a></li>
                             <li><i class="fa fa-id-card-o"></i><a href="{{ route('item.main') }}">Items</a></li>
+                            
                         </ul>
                     </li>
                     @if(Auth::user()->id == 1)
@@ -112,8 +114,21 @@
             </div>
             <div class="top-right">
                 <div class="header-menu">
+                    <div class="w-100">
+                        <div class="row">
+                            <div class="col-md-2 py-3">
+                                <img src="https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_92x30dp.png" height="40px">
+                            </div>
+                            <div class="col-md-10 pt-3 w-100">
+                                <form method="GET" action="http://www.google.es/search" target="_blank">
+                                    <input class="form-control" style="border-radius: 40px" type="text" name="q" placeholder="Realizar una búsqueda en Google o escribir una URL" aria-label="Search">
+                                    <input style="display: none" type="submit">
+                                </form>
+                            </div>
+                        </div>
+                    </div>
                     <div class="header-left">
-                        <button class="search-trigger"><i class="fa fa-search"></i></button>
+                        {{-- <button class="search-trigger"><i class="fa fa-search"></i></button>
                         <div class="form-inline text-center pt-3">
                             <img src="https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_92x30dp.png" height="90%">
                             <form class="search-form" method="GET" action="http://www.google.es/search" target="_blank">
@@ -121,7 +136,7 @@
                                 <input style="display: none" type="submit">
                                 <button class="search-close" type="submit"><i class="fa fa-close"></i></button>
                             </form>
-                        </div>
+                        </div> --}}
                         {{-- <div class="dropdown for-notification">
                             <button class="btn btn-secondary dropdown-toggle" type="button" id="notification" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="fa fa-bell"></i>

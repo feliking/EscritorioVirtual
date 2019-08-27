@@ -11,16 +11,26 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="scrollmodalLabel">@{{ notice.title }}</h5>
+                <span class="badge badge-danger">@{{ notice.created_at }}</span>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <p>
-                    @{{ notice.description }}
-                </p>
+                <div class="row">
+                    <div class="col-md-6 text-center">
+                        <strong>@{{ notice.title }}</strong>
+                        <img :src="notice.img ? notice.img : '/images/logo.png'" width="100%" height="100%">
+                    </div>
+                    <div class="col-md-6">
+                        <p>
+                            @{{ notice.description }}
+                        </p>
+                    </div>
+                </div>
             </div>
             <div class="modal-footer">
+                <a v-if="notice.document" :href="notice.document" target="_blank" class="btn btn-success float-right"><i class="fa fa-expand"></i> Ver archivo adjunto</a>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar ventana</button>
             </div>
         </div>
@@ -109,16 +119,30 @@
                 </div>
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item" v-for="(notice, index) in notice_type.notices">
-                        <a href="#" data-toggle="modal" data-target="#scrollmodal" @click.prevent="getNotice(notice.id)"> <i class="fa fa-tasks"></i> @{{ notice.title }} </a><a href="#" data-toggle="modal" data-target="#content-document" @click.prevent="getNotice(notice.id)"><span class="badge badge-primary pull-right"><i class="fa fa-paperclip"></i></span></a>
+                        <a href="#" data-toggle="modal" data-target="#scrollmodal" @click.prevent="getNotice(notice.id)">
+                            <div class="card">
+                                <img class="card-img-top" :src="notice.img ? notice.img : '/images/logo.png'" alt="Card image cap" width="100%" style="max-height: 150px">
+                                <div class="card-body">
+                                    <span class="badge badge-danger pull-left">@{{ getFormat(notice.created_at) }}</span>
+                                    <h4 class="card-title mb-3">@{{ notice.title }}</h4>
+                                    {{-- <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> --}}
+                                </div>
+                            </div>
+                        </a>
+                        {{-- <a href="#" data-toggle="modal" data-target="#scrollmodal" @click.prevent="getNotice(notice.id)"> <i class="fa fa-tasks"></i> @{{ notice.title }} </a><a href="#" data-toggle="modal" data-target="#content-document" @click.prevent="getNotice(notice.id)"><span class="badge badge-primary pull-right"><i class="fa fa-paperclip"></i></span></a> --}}
+                    </li>
+                    <li class="list-group-item" v-if="notice_type.notices.length == 0">
+                        <p>No hay noticias aún</p>
                     </li>
                 </ul>
-                <div class="card-footer user-header alt bg-success" v-if="notice_types.length > 4">
-                    <div class="media">
-                        <div class="media-body">
-                            <h4 class="text-light display-6">Últimas Noticias: @{{ notice_type.name }}</h2>
-                            {{-- <p>Project Manager</p> --}}
+                <div class="card-footer user-header alt bg-success" v-if="notice_type.notices.length > 2">
+                    <a href="#" @click.prevent="getNoticeAll">
+                        <div class="media">
+                            <div class="media-body">
+                                <h4 class="text-light display-6">Ver todo.....</h2>
+                            </div>
                         </div>
-                    </div>
+                    </a>
                 </div>
             </section>
         </aside>
@@ -167,6 +191,11 @@
             this.getOptions()
             this.getNoticeTypes()
             this.getNotices()
+        },
+        computed: {
+            
+        },
+        watch: {
             
         },
         methods:{
@@ -193,6 +222,16 @@
             async getItem(id){
                 let res = await axios.get('api/item/'+id)
                 this.item = res.data
+            },
+            getFormat(fecha){
+                var inp = fecha.split(' ')
+                var temp = inp[0].split('-')
+                var result = temp[2]+'/'+temp[1]+'/'+temp[0]
+                return String(result)
+            },
+            async getNoticeAll(){
+                let res = await axios.get('api/notice_type')
+                this.notice_types = res.data
             }
         }
     });

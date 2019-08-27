@@ -5,19 +5,19 @@
 @endsection
 
 @section('content')
-<div class="modal fade" id="addOption" tabindex="-1" role="dialog" aria-labelledby="scrollmodalLabel" aria-hidden="true">
+<div class="modal fade" id="addNoticeType" tabindex="-1" role="dialog" aria-labelledby="scrollmodalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="scrollmodalLabel">Nueva Opción</h5>
+                <h5 class="modal-title" id="scrollmodalLabel">Nuevo Tipo de noticia</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form @submit.prevent="addOption" enctype="multipart/form-data">
+            <form @submit.prevent="addNoticeType" enctype="multipart/form-data">
             <div class="modal-body">
                 <div class="form-group">
-                    <input type="text" placeholder="Nombre de la opción" class="form-control" v-model="option.name" required>
+                    <input type="text" placeholder="Nombre del tipo de noticia" class="form-control" v-model="notice_type.name" required>
                 </div>
             </div>
             <div class="modal-footer">
@@ -29,19 +29,19 @@
     </div>
 </div>
 
-<div class="modal fade" id="editOption" tabindex="-1" role="dialog" aria-labelledby="scrollmodalLabel" aria-hidden="true">
+<div class="modal fade" id="editNoticeType" tabindex="-1" role="dialog" aria-labelledby="scrollmodalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="scrollmodalLabel">Editar Opción</h5>
+                <h5 class="modal-title" id="scrollmodalLabel">Editar Tipo de noticia</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form @submit.prevent="updateOption(option.id)" enctype="multipart/form-data">
+            <form @submit.prevent="updateNoticeType(notice_type.id)" enctype="multipart/form-data">
             <div class="modal-body">
                 <div class="form-group">
-                    <input type="text" placeholder="Título" class="form-control" v-model="option.name" required>
+                    <input type="text" placeholder="Título" class="form-control" v-model="notice_type.name" required>
                 </div>
             </div>
             <div class="modal-footer">
@@ -57,24 +57,24 @@
     <div class="col-md-12">
         <div class="card">
             <div class="card-header">
-                <strong class="card-title">Opciones </strong>
-                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#addOption" @click.prevent="resetOption"><i class="fa fa-plus"></i></button>
+                <strong class="card-title">Tipos de noticias </strong>
+                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#addNoticeType" @click.prevent="resetNoticeType"><i class="fa fa-plus"></i></button>
             </div>
             <div class="card-body text-left">
                 <table id="bootstrap-data-table-export" class="table table-striped table-bordered dt-responsive small">
                     <thead>
                         <tr>
-                            <th>Opciones</th>
+                            <th>Tipos de noticia</th>
                             <th class="text-white bg-dark">Nombre</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="(option, index) in options">
+                        <tr v-for="(notice_type, index) in notice_types">
                             <td class="text-center">
-                                <a href="#" class="btn-sm btn-primary" data-toggle="modal" data-target="#editOption" @click.prevent="getOption(option.id)"><i class="fa fa-pencil fa-lg"></i></a>
-                                <a href="#" class="btn-sm btn-danger" data-toggle="modal" data-target="#" @click.prevent="deleteOption(option.id)"><i class="fa fa-trash-o fa-lg"></i></a>
+                                <a href="#" class="btn-sm btn-primary" data-toggle="modal" data-target="#editNoticeType" @click.prevent="getNoticeType(notice_type.id)"><i class="fa fa-pencil fa-lg"></i></a>
+                                <a href="#" class="btn-sm btn-danger" data-toggle="modal" data-target="#" @click.prevent="deleteNoticeType(notice_type.id)"><i class="fa fa-trash-o fa-lg"></i></a>
                             </td>
-                            <td>@{{ option.name }}</td>
+                            <td>@{{ notice_type.name }}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -99,12 +99,12 @@
         el: '#app',
         data(){
             return{
-                options: [],
-                option: {}
+                notice_types: [],
+                notice_type: {}
             }
         },
         mounted() {
-            this.getOptions()
+            this.getNoticeTypes()
             setTimeout(function(){$('#bootstrap-data-table-export').DataTable(
                     {
                     //searching: false,
@@ -133,47 +133,45 @@
                 );}, 0);
         },
         methods:{
-            async getOptions(){
-                let res = await axios.get("{{ route('option.index') }}")
-                this.options = res.data
+            async getNoticeTypes(){
+                let res = await axios.get("{{ route('notice_type.index') }}")
+                this.notice_types = res.data
             },
-            async addOption(){
+            async addNoticeType(){
                 try{
-                    this.option.user_id = {{ Auth::user()->id }}
-                    let res = await axios.post("{{ url('api/option') }}", this.option)
-                    this.option = {}
-                    this.getOptions()
-                    location.reload();
+                    this.notice_type.user_id = {{ Auth::user()->id }}
+                    let res = await axios.post("{{ url('api/notice_type') }}", this.notice_type)
+                    this.notice_type = {}
+                    this.getNoticeTypes()
                     toastr.success('Operacion exitosa', 'Registrado correctamente')
                 }
                 catch{
                     toastr.error('¡Error!', 'Ocurrió un problema')
                 }
             },
-            async getOption(id){
-                let res = await axios.get("{{ url('api/option') }}/"+id)
-                this.option = res.data
+            async getNoticeType(id){
+                let res = await axios.get("{{ url('api/notice_type') }}/"+id)
+                this.notice_type = res.data
             },
-            async resetOption(){
-                this.option = {}
+            async resetNoticeType(){
+                this.notice_type = {}
             },
-            async updateOption(id){
-                this.option.user_id = "{{ Auth::user()->id }}"
+            async updateNoticeType(id){
+                this.notice_type.user_id = "{{ Auth::user()->id }}"
                 try{
-                    let res = await axios.put("{{ url('api/option') }}/"+id, this.option)
-                    this.option = res.data
-                    this.getOptions()
-                    location.reload();
+                    let res = await axios.put("{{ url('api/notice_type') }}/"+id, this.notice_type)
+                    this.notice_type = res.data
+                    this.getNoticesTypes()
                     toastr.success('Operación exitosa', 'Registro actualizado')
                 }
                 catch(e){
                     toastr.error(e)
                 }
             },
-            async deleteOption(id){
+            async deleteNoticeType(id){
                 try{
-                    let res = await axios.delete("{{ url('api/option') }}/"+id)
-                    this.getOptions()
+                    let res = await axios.delete("{{ url('api/notice_type') }}/"+id)
+                    this.getNoticeTypes()
                     toastr.success('Operación exitosa', 'Registro eliminado')
                 }
                 catch{

@@ -199,6 +199,7 @@
                     let res = await axios.put("{{ url('api/user') }}/"+id, this.user)
                     this.user = res.data
                     this.getUsers()
+                    location.reload();
                     toastr.success('Operación exitosa', 'Registro actualizado')
                 }
                 catch(e){
