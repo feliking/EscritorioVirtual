@@ -20,6 +20,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::resource('user', 'UserController');
 Route::resource('option', 'OptionController');
 Route::resource('item', 'ItemController');
+Route::get('notice_type/partial', 'NoticeTypeController@getNotices');
 Route::resource('notice_type', 'NoticeTypeController');
 Route::resource('notice', 'NoticeController');
 

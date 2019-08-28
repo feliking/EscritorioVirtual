@@ -109,7 +109,7 @@
                 <div class="navbar-header">
                     <a class="navbar-brand" href="{{ url('/') }}"><img src="{{ asset('images/logo.png') }}" alt="Logo"></a>
                     <a id="menuToggle" class="menutoggle"><i class="fa fa-bars"></i></a>
-                    <a class="navbar-brand hidden" href="{{ url('/') }}"><img src="{{ asset('images/logo2.png') }}" alt="Logo"></a>
+                    {{-- <a class="navbar-brand hidden" href="{{ url('/') }}"><img src="{{ asset('images/logo2.png') }}" alt="Logo"></a> --}}
                 </div>
             </div>
             <div class="top-right">
@@ -208,15 +208,15 @@
                         </a>
 
                         <div class="user-menu dropdown-menu">
-                            <a class="nav-link" href="#"><i class="fa fa- user"></i>Mi perfil</a>
+                            <a class="nav-link" href="{{ route('user.password') }}"><i class="fa fa-user"></i>Cambiar contraseña</a>
 
-                            <a class="nav-link" href="#"><i class="fa fa- user"></i>Notificaciones <span class="count">13</span></a>
+                            {{-- <a class="nav-link" href="#"><i class="fa fa-user"></i>Notificaciones <span class="count">13</span></a>
 
-                            <a class="nav-link" href="#"><i class="fa fa -cog"></i>Configuración</a>
+                            <a class="nav-link" href="#"><i class="fa fa-cog"></i>Configuración</a> --}}
 
                             <a class="nav-link" href="#" href="{{ route('logout') }}"
                             onclick="event.preventDefault();
-                                          document.getElementById('logout-form').submit();"><i class="fa fa-power -off"></i>Cerrar sesión</a>
+                                          document.getElementById('logout-form').submit();"><i class="fa fa-power-off"></i>Cerrar sesión</a>
                         </div>
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                             @csrf

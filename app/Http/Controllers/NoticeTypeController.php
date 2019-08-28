@@ -40,7 +40,7 @@ class NoticeTypeController extends Controller
      */
     public function show($id)
     {
-        return NoticeType::findOrFail($id);
+        return NoticeType::with('notices')->findOrFail($id);
     }
 
     /**

@@ -6,36 +6,7 @@
         <h2>Escritorio Virtual</h2>
     </div>
 </div>
-<div class="modal fade" id="scrollmodal" tabindex="-1" role="dialog" aria-labelledby="scrollmodalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="scrollmodalLabel">@{{ notice.title }}</h5>
-                <span class="badge badge-danger">@{{ notice.created_at }}</span>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="row">
-                    <div class="col-md-6 text-center">
-                        <strong>@{{ notice.title }}</strong>
-                        <img :src="notice.img ? notice.img : '/images/logo.png'" width="100%" height="100%">
-                    </div>
-                    <div class="col-md-6">
-                        <p>
-                            @{{ notice.description }}
-                        </p>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <a v-if="notice.document" :href="notice.document" target="_blank" class="btn btn-success float-right"><i class="fa fa-expand"></i> Ver archivo adjunto</a>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar ventana</button>
-            </div>
-        </div>
-    </div>
-</div>
+
 <div class="modal fade" id="items" tabindex="-1" role="dialog" aria-labelledby="scrollmodalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
@@ -105,6 +76,79 @@
         </div>
     </div>
 </div>
+<div class="modal fade" id="notices" tabindex="-1" role="dialog" aria-labelledby="scrollmodalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="scrollmodalLabel">@{{ notice_type.name }}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <table class="table">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">Fecha</th>
+                            <th scope="col">Título</th>
+                            <th scope="col">Ver/Adjuntos</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="(notice, index) in notice_type.notices">
+                            <td class="text-center">
+                                <span class="badge badge-primary">
+                                    @{{ notice.created_at }}
+                                </span>
+                            </td>
+                            <td>@{{ notice.title }}</td>
+                            <td class="text-center">
+                                <a href="#" data-toggle="modal" data-target="#scrollmodal" @click.prevent="getNotice(notice.id)">
+                                    <span class="badge badge-primary pull-right">
+                                        <i class="fa fa-eye"></i>
+                                    </span>
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar ventana</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="scrollmodal" tabindex="-1" role="dialog" aria-labelledby="scrollmodalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="scrollmodalLabel">@{{ notice.title }}</h5>
+                <span class="badge badge-danger">@{{ notice.created_at }}</span>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-6 text-center">
+                        <strong>@{{ notice.title }}</strong>
+                        <img :src="notice.img ? notice.img : '/images/logo.png'" width="100%" height="100%">
+                    </div>
+                    <div class="col-md-6">
+                        <p>
+                            @{{ notice.description }}
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <a v-if="notice.document" :href="notice.document" target="_blank" class="btn btn-success float-right"><i class="fa fa-expand"></i> Ver archivo adjunto</a>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar ventana</button>
+            </div>
+        </div>
+    </div>
+</div>
 <div class="row">
     <div class="col-md-4" v-for="(notice_type, index) in notice_types">
         <aside class="profile-nav alt">
@@ -125,18 +169,16 @@
                                 <div class="card-body">
                                     <span class="badge badge-danger pull-left">@{{ getFormat(notice.created_at) }}</span>
                                     <h4 class="card-title mb-3">@{{ notice.title }}</h4>
-                                    {{-- <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> --}}
                                 </div>
                             </div>
                         </a>
-                        {{-- <a href="#" data-toggle="modal" data-target="#scrollmodal" @click.prevent="getNotice(notice.id)"> <i class="fa fa-tasks"></i> @{{ notice.title }} </a><a href="#" data-toggle="modal" data-target="#content-document" @click.prevent="getNotice(notice.id)"><span class="badge badge-primary pull-right"><i class="fa fa-paperclip"></i></span></a> --}}
                     </li>
                     <li class="list-group-item" v-if="notice_type.notices.length == 0">
                         <p>No hay noticias aún</p>
                     </li>
                 </ul>
                 <div class="card-footer user-header alt bg-success" v-if="notice_type.notices.length > 2">
-                    <a href="#" @click.prevent="getNoticeAll">
+                    <a href="#" data-toggle="modal" data-target="#notices" @click.prevent="getNoticeType(notice_type.id)">
                         <div class="media">
                             <div class="media-body">
                                 <h4 class="text-light display-6">Ver todo.....</h2>
@@ -184,7 +226,8 @@
                 count: 0,
                 option: {},
                 item: {},
-                expand: false
+                expand: false,
+                notice_type: {}
             }
         },
         mounted() {
@@ -209,7 +252,18 @@
             },
             async getNoticeTypes(){
                 let res = await axios.get('api/notice_type')
-                this.notice_types = res.data
+                let tipos = res.data
+                let notices = []
+                for(i = 0; i < tipos.length; i++){
+                    for(var j = 0; j < 3; j++){
+                        if(tipos[i].notices[j]){
+                            notices.push(tipos[i].notices[j])
+                        }
+                    }
+                    tipos[i].notices = notices
+                    notices = []
+                }
+                this.notice_types = tipos
             },
             async getNotice(id){
                 let res = await axios.get('api/notice/'+id)
@@ -229,9 +283,9 @@
                 var result = temp[2]+'/'+temp[1]+'/'+temp[0]
                 return String(result)
             },
-            async getNoticeAll(){
-                let res = await axios.get('api/notice_type')
-                this.notice_types = res.data
+            async getNoticeType(id){
+                let res = await axios.get('api/notice_type/'+id)
+                this.notice_type = res.data
             }
         }
     });

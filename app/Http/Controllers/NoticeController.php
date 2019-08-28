@@ -19,7 +19,7 @@ class NoticeController extends Controller
      */
     public function index()
     {
-        return Notice::with('notice_type')->get();
+        return Notice::with('notice_type')->orderBy('created_at', 'DESC')->get();
     }
 
     /**

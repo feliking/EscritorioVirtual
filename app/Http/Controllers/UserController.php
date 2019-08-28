@@ -73,4 +73,8 @@ class UserController extends Controller
         $user->delete();
         return $user;
     }
+
+    public function password(){
+        return view('users.password');
+    }
 }
