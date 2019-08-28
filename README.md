@@ -10,6 +10,9 @@
 * Copia `.env.example` to `.env`
 * Configura `.env`
 * Instala las dependencias `composer install`
+* Genera la llave de la aplicación `php artisan key:generate`
+* Ejecuta las migraciones `php artisan migrate --seed`
 
-## Usage
+## Uso
 * Ejecuta el servidor `php artisan serve`
+* Usuario y contraseña por defecto NOMBRE DE USUARIO: admin CONTRASEÑA: admin
