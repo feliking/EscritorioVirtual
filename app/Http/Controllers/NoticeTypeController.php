@@ -40,7 +40,7 @@ class NoticeTypeController extends Controller
      */
     public function show($id)
     {
-        return NoticeType::with('notices')->findOrFail($id);
+        return NoticeType::with('notices')->orderBy('created_at', 'DESC')->findOrFail($id);
     }
 
     /**

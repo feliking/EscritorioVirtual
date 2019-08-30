@@ -160,16 +160,8 @@
         methods:{
             async resetDataTable(){
                 setTimeout(function(){
-                    $('#bootstrap-data-table-export').DataTable().destroy();
-                }, 200);
-                setTimeout(function(){
-                    $('#bootstrap-data-table-export').DataTable().draw();
-                }, 400);
-            },
-            async drawDataTable(){
-                setTimeout(function(){
-                    $('#bootstrap-data-table-export').DataTable().draw();
-                }, 200);
+                    $('#bootstrap-data-table-export').DataTable().destroy().draw();
+                },400);
             },
             async getUsers(){
                 let res = await axios.get("{{ route('user.index') }}")
@@ -180,7 +172,7 @@
                     let res = await axios.post("{{ url('api/user') }}", this.user)
                     this.user = {}
                     this.getUsers()
-                    location.reload()
+                    // location.reload()
                     toastr.success('Operacion exitosa', 'Registrado correctamente')
                 }
                 catch{
@@ -199,7 +191,7 @@
                     let res = await axios.put("{{ url('api/user') }}/"+id, this.user)
                     this.user = res.data
                     this.getUsers()
-                    location.reload();
+                    // location.reload();
                     toastr.success('Operación exitosa', 'Registro actualizado')
                 }
                 catch(e){

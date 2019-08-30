@@ -176,7 +176,7 @@
                         }
                     },
                 }
-                );}, 0);
+                );}, 400);
         },
         methods:{
             async getNotices(){
@@ -201,6 +201,7 @@
                     this.$refs.document_a.value = null
                     this.$refs.img_a.value = null
                     this.getNotices()
+                    // location.reload()
                     toastr.success('Operacion exitosa', 'Registrado correctamente')
                 }
                 catch{

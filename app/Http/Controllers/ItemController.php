@@ -19,7 +19,7 @@ class ItemController extends Controller
      */
     public function index()
     {
-        return Item::with('option')->get(); 
+        return Item::with('option')->orderBy('created_at', 'DESC')->get(); 
     }
 
     /**

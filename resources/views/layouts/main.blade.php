@@ -58,11 +58,11 @@
         #cellPaiChart{
             height: 160px;
         }
-
     </style>
 </head>
 
 <body class="open">
+    
     <div id="app">
     <!-- Left Panel -->
     <aside id="left-panel" class="left-panel">

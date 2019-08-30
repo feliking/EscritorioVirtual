@@ -130,7 +130,7 @@
                         }
                     },
                 }
-                );}, 0);
+                );}, 400);
         },
         methods:{
             async getNoticeTypes(){
@@ -143,6 +143,7 @@
                     let res = await axios.post("{{ url('api/notice_type') }}", this.notice_type)
                     this.notice_type = {}
                     this.getNoticeTypes()
+                    //location.reload()
                     toastr.success('Operacion exitosa', 'Registrado correctamente')
                 }
                 catch{

@@ -18,7 +18,7 @@ class OptionController extends Controller
      */
     public function index()
     {
-        return Option::with('items')->get();
+        return Option::with('items')->orderBy('created_at', 'DESC')->get();
     }
 
     /**

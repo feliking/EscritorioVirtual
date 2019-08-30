@@ -130,7 +130,7 @@
                         }
                     },
                 }
-                );}, 0);
+                );}, 400);
         },
         methods:{
             async getOptions(){
@@ -143,7 +143,7 @@
                     let res = await axios.post("{{ url('api/option') }}", this.option)
                     this.option = {}
                     this.getOptions()
-                    location.reload();
+                    // location.reload();
                     toastr.success('Operacion exitosa', 'Registrado correctamente')
                 }
                 catch{
@@ -163,7 +163,7 @@
                     let res = await axios.put("{{ url('api/option') }}/"+id, this.option)
                     this.option = res.data
                     this.getOptions()
-                    location.reload();
+                    // location.reload();
                     toastr.success('Operación exitosa', 'Registro actualizado')
                 }
                 catch(e){

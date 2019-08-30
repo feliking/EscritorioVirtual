@@ -17,7 +17,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        return User::where('id', '>=', 2)->get();
+        return User::where('id', '>=', 2)->orderBy('created_at', 'DESC')->get();
     }
 
     /**

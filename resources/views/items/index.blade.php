@@ -166,7 +166,7 @@
                         }
                     },
                 }
-                );}, 0);
+                );}, 400);
         },
         methods:{
             async getItems(){
@@ -190,6 +190,7 @@
                     this.item = {}
                     this.$refs.document.value = null
                     this.getItems()
+                    //location.reload()
                     toastr.success('Operacion exitosa', 'Registrado correctamente')
                 }
                 catch{
@@ -218,6 +219,7 @@
                     this.item = res.data
                     this.$refs.document_update.value = null
                     this.getItems()
+                    //location.reload()
                     toastr.success('Operación exitosa', 'Registro actualizado')
                 }
                 catch{
