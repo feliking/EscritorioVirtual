@@ -20,7 +20,7 @@ class CreateItemsTable extends Migration
             $table->integer('option_id')->unsigned();
             $table->foreign('option_id')->references('id')->on('options')->onDelete('cascade');
             $table->string('name');
-            $table->string('description')->nullable();
+            $table->string('description', 5000)->nullable();
             $table->string('document')->nullable();
             $table->timestamps();
         });

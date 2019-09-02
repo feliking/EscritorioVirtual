@@ -20,7 +20,7 @@ class CreateNoticesTable extends Migration
             $table->integer('notice_type_id')->unsigned();
             $table->foreign('notice_type_id')->references('id')->on('notice_types');
             $table->string('title');
-            $table->string('description', 3000)->nullable();
+            $table->string('description', 5000)->nullable();
             $table->string('document')->nullable();
             $table->string('img')->nullable();
             $table->timestamps();
